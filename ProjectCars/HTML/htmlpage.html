@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Create a new record
+            $("#create-button").click(function () {
+                var make = $("#create-make").val();
+                var model = $("#create-model").val();
+                var vin = $("#create-vin").val();
+                var year = $("#create-year").val();
+
+                // AJAX call to create the record
+                $.ajax({
+                    type: "POST",
+                    url: "https://localhost:7051/api/cars",
+                    data: { make: make, model: model, vin: vin, year: year },
+                    success: function (data) {
+                        alert("Record created successfully!");
+                    }
+                });
+            });
+
+            // Read all records
+            $("#read-button").click(function () {
+                // AJAX call to read the records
+                $.ajax({
+                    type: "GET",
+                    url: "https://localhost:7051/api/cars",
+                    success: function (data) {
+                        // Display the records in a table
+                        $("#records").html(data);
+                    }
+                });
+            });
+
+            // Update a record
+            $("#update-button").click(function () {
+                var id = $("#update-id").val();
+                var make = $("#update-make").val();
+                var model = $("#update-model").val();
+                var vin = $("#update-vin").val();
+                var year = $("#update-year").val();
+
+                // AJAX call to update the record
+                $.ajax({
+                    type: "POST",
+                    url: "https://localhost:7051/api/cars",
+                    data: { id: id, make: make, model: model, vin: vin, year: year },
+                    success: function (data) {
+                        alert("Record updated successfully!");
+                    }
+                });
+            });
+
+            // Delete a record
+            $("#delete-button").click(function () {
+                var id = $("#delete-id").val();
+
+                // AJAX call to delete the record
+                $.ajax({
+                    type: "POST",
+                    url: "https://localhost:7051/api/cars",
+                    data: { id: id },
+                    success: function (data) {
+                        alert("Record deleted successfully!");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>CRUD Operations</h1>
+
+    <!-- Create form -->
+    <h2>Create</h2>
+    <input type="text" id="create-make" placeholder="Make">
+    <input type="text" id="create-model" placeholder="Model">
+    <input type="text" id="create-vin" placeholder="Vin">
+    <input type="number" id="create-name" placeholder="Year">
+    <button id="create-button">Create</button>
+
+    <!-- Read form -->
+    <h2>Read</h2>
+    <button id="read-button">Read All</button>
+    <table id="records"></table>
+
+    <!-- Update form -->
+    <h2>Update</h2>
+    <input type="number" id="update-id" placeholder="ID">
+    <input type="text" id="update-make" placeholder="Make">
+    <input type="text" id="update-model" placeholder="Model">
+    <input type="text" id="update-vin" placeholder="Vin">
+    <input type="number" id="update-year" placeholder="Year">
+    <button id="update-button">Update</button>
+
+    <!-- Delete form -->
+    <h2>Delete</h2>
+    <input type="number" id="update-id" placeholder="ID">
+    <button id="delete-button">Update</button>
+</body>
+</html>
